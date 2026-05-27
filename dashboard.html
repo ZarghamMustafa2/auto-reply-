@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Messenger Broadcast & Auto-Reply Hub</title>
+    <!-- FontAwesome Icons for modern aesthetic -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Ambient Decorative Glows -->
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+
+        <!-- ==========================================
+             SIDEBAR NAVIGATION
+             ========================================== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fa-brands fa-messenger"></i>
+                </div>
+                <div class="sidebar-title" id="txt-app-logo-title">MetaHub</div>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li>
+                    <a class="menu-item active" data-tab="tab-dashboard" id="nav-dashboard">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span class="menu-label" id="txt-nav-dashboard">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-item" data-tab="tab-broadcaster" id="nav-broadcaster">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span class="menu-label" id="txt-nav-broadcaster">Broadcaster</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-item" data-tab="tab-autoreply" id="nav-autoreply">
+                        <i class="fa-solid fa-robot"></i>
+                        <span class="menu-label" id="txt-nav-autoreply">Auto-Replies</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="menu-item" data-tab="tab-settings" id="nav-settings">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span class="menu-label" id="txt-nav-settings">Settings</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-profile-avatar" id="txt-user-avatar">FB</div>
+                <div class="user-profile-info">
+                    <span class="user-profile-name" id="txt-user-name">Meta Business Admin</span>
+                    <span class="user-profile-role" id="txt-user-role">Page Administrator</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ==========================================
+             MAIN CONTENT WRAPPER
+             ========================================== -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="app-header">
+                <div class="header-title-container">
+                    <span class="header-breadcrumb" id="txt-header-breadcrumb">Application</span>
+                    <h1 class="header-page-title" id="txt-header-page-title">Dashboard Overview</h1>
+                </div>
+
+                <div class="header-controls">
+                    <!-- Status Indicator -->
+                    <div class="status-indicator">
+                        <div class="status-dot" id="status-indicator-dot"></div>
+                        <span id="txt-status-indicator-label">Simulation Mode</span>
+                    </div>
+
+                    <!-- Bilingual Switch -->
+                    <div class="lang-toggle-container">
+                        <button class="lang-btn active" id="lang-btn-en" onclick="setLanguage('en')">EN</button>
+                        <button class="lang-btn" id="lang-btn-ur" onclick="setLanguage('ur')">اردو</button>
+                    </div>
+
+                    <!-- Light/Dark Toggle -->
+                    <button class="btn-control" id="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-moon" id="theme-icon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Scrollable Tab Viewport -->
+            <div class="tab-viewport">
+
+                <!-- ==========================================
+                     TAB: DASHBOARD VIEW
+                     ========================================== -->
+                <section class="tab-pane active" id="tab-dashboard">
+                    <!-- Metrics grid -->
+                    <div class="grid-stats">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <span class="stat-title" id="txt-stat-subscribers-title">Active Contacts</span>
+                                <i class="fa-solid fa-users stat-icon" style="color: var(--accent-primary);"></i>
+                            </div>
+                            <div class="stat-value" id="val-stat-subscribers">8</div>
+                            <div class="stat-desc" id="txt-stat-subscribers-desc">People interacting with your Page</div>
+                        </div>
+                        <div class="stat-card stat-card-2">
+                            <div class="stat-header">
+                                <span class="stat-title" id="txt-stat-sent-title">Messages Sent</span>
+                                <i class="fa-solid fa-paper-plane stat-icon" style="color: var(--accent-secondary);"></i>
+                            </div>
+                            <div class="stat-value" id="val-stat-sent">324</div>
+                            <div class="stat-desc" id="txt-stat-sent-desc">Total dispatched messages</div>
+                        </div>
+                        <div class="stat-card stat-card-3">
+                            <div class="stat-header">
+                                <span class="stat-title" id="txt-stat-success-title">Success Rate</span>
+                                <i class="fa-solid fa-circle-check stat-icon" style="color: var(--accent-success);"></i>
+                            </div>
+                            <div class="stat-value" id="val-stat-success">98.4%</div>
+                            <div class="stat-desc" id="txt-stat-success-desc">Safe deliveries completed</div>
+                        </div>
+                        <div class="stat-card stat-card-4">
+                            <div class="stat-header">
+                                <span class="stat-title" id="txt-stat-rules-title">Active Auto-Replies</span>
+                                <i class="fa-solid fa-robot stat-icon" style="color: var(--accent-warning);"></i>
+                            </div>
+                            <div class="stat-value" id="val-stat-rules">4</div>
+                            <div class="stat-desc" id="txt-stat-rules-desc">Automated reply keyword rules</div>
+                        </div>
+                    </div>
+
+                    <!-- Beautiful Live SVG Analytics Chart -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h2 class="chart-title" id="txt-chart-title">Broadcasting Activity Analytics (Last 7 Days)</h2>
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: var(--accent-primary);"></div>
+                                    <span id="txt-legend-sent">Messages Sent</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <!-- Premium SVG dynamic line chart -->
+                            <svg class="chart-svg" viewBox="0 0 700 200" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="var(--accent-primary)" stop-opacity="0.3"/>
+                                        <stop offset="100%" stop-color="var(--accent-primary)" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Grid Lines -->
+                                <line x1="0" y1="50" x2="700" y2="50" stroke="var(--border-color)" stroke-dasharray="4"/>
+                                <line x1="0" y1="100" x2="700" y2="100" stroke="var(--border-color)" stroke-dasharray="4"/>
+                                <line x1="0" y1="150" x2="700" y2="150" stroke="var(--border-color)" stroke-dasharray="4"/>
+                                
+                                <!-- Area under path -->
+                                <path d="M 0 170 Q 116 110 233 130 T 466 70 T 700 80 L 700 200 L 0 200 Z" fill="url(#chartGrad)"/>
+                                
+                                <!-- Dynamic Spline Path -->
+                                <path d="M 0 170 Q 116 110 233 130 T 466 70 T 700 80" fill="none" stroke="var(--accent-primary)" stroke-width="3"/>
+                                
+                                <!-- Graph Dots and Labels -->
+                                <circle cx="116" cy="110" r="5" fill="var(--accent-primary)" stroke="var(--bg-surface)" stroke-width="2"/>
+                                <circle cx="233" cy="130" r="5" fill="var(--accent-primary)" stroke="var(--bg-surface)" stroke-width="2"/>
+                                <circle cx="350" cy="100" r="5" fill="var(--accent-primary)" stroke="var(--bg-surface)" stroke-width="2"/>
+                                <circle cx="466" cy="70"  r="5" fill="var(--accent-primary)" stroke="var(--bg-surface)" stroke-width="2"/>
+                                <circle cx="583" cy="90"  r="5" fill="var(--accent-primary)" stroke="var(--bg-surface)" stroke-width="2"/>
+                                <circle cx="700" cy="80"  r="5" fill="var(--accent-primary)" stroke="var(--bg-surface)" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Bottom Columns -->
+                    <div class="dashboard-row">
+                        <!-- Contacts Manager View -->
+                        <div class="panel-card">
+                            <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                <h3 class="panel-title" id="txt-contacts-panel-title">Active Messenger Contacts</h3>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <button class="btn-primary" style="padding: 6px 12px; font-size: 11px; height: auto; border-radius: 6px;" onclick="promptAddTestSubscriber()" id="btn-add-contact">
+                                        <i class="fa-solid fa-plus"></i> Add Test PSID
+                                    </button>
+                                    <div class="status-indicator" style="padding: 4px 10px; font-size: 11px;">
+                                        <span id="val-contacts-count">8 Total</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-list" id="dashboard-contact-list">
+                                <!-- Contact items injected dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Mini Guidelines Info Card -->
+                        <div class="panel-card" style="background: linear-gradient(135deg, hsla(214, 100%, 54%, 0.08), hsla(180, 100%, 40%, 0.04));">
+                            <div class="panel-header" style="border-bottom: 1px solid var(--accent-primary); padding-bottom: 8px;">
+                                <h3 class="panel-title" style="color: var(--accent-primary); font-weight: 700;" id="txt-rules-panel-title">Meta Messaging Policies</h3>
+                            </div>
+                            <div style="font-size: 13px; line-height: 1.6; display: flex; flex-direction: column; gap: 12px; color: var(--text-secondary);">
+                                <p id="txt-policy-guide-1">1. <strong>24-Hour Rule:</strong> You can only send standard freeform messages to a subscriber within 24 hours of their last interaction with your Page.</p>
+                                <p id="txt-policy-guide-2">2. <strong>One-Time Notifications (OTN):</strong> Outside the 24-hour window, you require specific user opt-in tokens to send promotional broadcasts.</p>
+                                <p id="txt-policy-guide-3">3. <strong>Anti-Spam Pacing:</strong> Sending bulk broadcasts too fast triggers automated spam blocks. MetaHub enforces configurable pacing delays to keep your Page healthy.</p>
+                                <div style="margin-top: 10px; display: flex; justify-content: flex-end;">
+                                    <button class="btn-primary" style="padding: 8px 16px; font-size: 12px;" onclick="switchTab('nav-settings')" id="btn-learn-more">Learn More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     TAB: BROADCASTER VIEW
+                     ========================================== -->
+                <section class="tab-pane" id="tab-broadcaster">
+                    <div class="broadcaster-grid">
+                        
+                        <!-- Left Panel: Composer -->
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h2 class="panel-title" id="txt-composer-title">Compose Messenger Broadcast</h2>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" id="txt-composer-msg-label">Broadcast Message Content</label>
+                                <textarea class="form-textarea" id="broadcaster-message-input" placeholder="Type your broadcast message here... Use [name] to personalize."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" id="txt-composer-delay-label">Safety Delay Between Messages</label>
+                                <div class="range-container">
+                                    <input type="range" class="range-input" id="broadcaster-delay-slider" min="1" max="15" value="3" oninput="updateSliderVal(this.value)">
+                                    <span class="range-value" id="broadcaster-delay-val">3s</span>
+                                </div>
+                                <small style="color: var(--text-muted); font-size: 11px; margin-top: 4px;" id="txt-composer-delay-desc">Safe delay window to avoid triggering anti-spam security.</small>
+                            </div>
+
+                            <div class="toggle-switch-container">
+                                <div class="toggle-info">
+                                    <span class="toggle-label" id="txt-composer-random-label">Randomize Delays</span>
+                                    <span class="toggle-desc" id="txt-composer-random-desc">Vary intervals slightly to simulate human pattern.</span>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="broadcaster-randomize-switch" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 10px;">
+                                <button class="btn-primary" id="btn-start-broadcast" onclick="startBroadcast()">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    <span id="txt-btn-broadcast-label">Dispatch Messages Now</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Status Log -->
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h2 class="panel-title" id="txt-queue-title">Broadcasting Progress & Console</h2>
+                                <button class="btn-control" style="width: 32px; height: 32px; border-radius: 8px; font-size: 12px;" onclick="clearConsoleLog()" title="Clear Logs">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+
+                            <!-- Live Progress Bar -->
+                            <div class="progress-container">
+                                <div class="progress-header">
+                                    <span id="txt-progress-status">Status: Idle</span>
+                                    <span id="broadcaster-progress-pct">0%</span>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-bar" id="broadcaster-progress-bar"></div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+                                    <span><span id="txt-progress-sent">Delivered</span>: <strong id="broadcaster-stat-sent">0</strong></span>
+                                    <span><span id="txt-progress-failed">Failed</span>: <strong id="broadcaster-stat-failed">0</strong></span>
+                                    <span><span id="txt-progress-remaining">Remaining</span>: <strong id="broadcaster-stat-remaining">0</strong></span>
+                                </div>
+                            </div>
+
+                            <!-- Terminal console log -->
+                            <div class="form-label" id="txt-console-label">Real-time Transmission Audit Logs</div>
+                            <div class="console-log" id="broadcaster-console">
+                                <div class="console-line console-info">&gt; MetaHub system initialized. Standard pacing active. Ready to broadcast.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     TAB: AUTO-REPLIES VIEW
+                     ========================================== -->
+                <section class="tab-pane" id="tab-autoreply">
+                    <div class="rules-layout">
+                        <!-- Left Panel: Create Rule -->
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h2 class="panel-title" id="txt-rule-creator-title">Add Auto-Reply Rule</h2>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" id="txt-rule-keyword-label">Incoming Trigger Keywords</label>
+                                <input type="text" class="form-input" id="rule-keyword-input" placeholder="e.g., price, dynamic, details">
+                                <small style="color: var(--text-muted); font-size: 11px; margin-top: 4px;" id="txt-rule-keyword-desc">Comma-separated list of keywords that trigger this auto-reply.</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" id="txt-rule-response-label">Response Text Template</label>
+                                <textarea class="form-textarea" id="rule-response-input" style="height: 140px;" placeholder="Type the automated response..."></textarea>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 10px;">
+                                <button class="btn-primary" onclick="addAutoReplyRule()">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span id="txt-btn-add-rule-label">Create Automated Rule</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Active Rules -->
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h2 class="panel-title" id="txt-rules-list-title">Active Automated Rules</h2>
+                            </div>
+                            <div class="rules-list" id="rules-cards-container">
+                                <!-- Automated Reply cards injected dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     TAB: SETTINGS VIEW
+                     ========================================== -->
+                <section class="tab-pane" id="tab-settings">
+                    <div class="settings-layout">
+                        
+                        <!-- Toggle Switch: Simulation Mode -->
+                        <div class="card-settings-group">
+                            <div class="card-settings-title" id="txt-settings-mode-title">Execution Mode</div>
+                            <div class="toggle-switch-container" style="margin-bottom: 0;">
+                                <div class="toggle-info">
+                                    <span class="toggle-label" id="txt-settings-sim-label">Demo Simulation Mode</span>
+                                    <span class="toggle-desc" id="txt-settings-sim-desc">Use sandboxed subscribers and logging without querying real Meta endpoints.</span>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="settings-simulation-switch" checked onchange="toggleExecutionMode(this.checked)">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Meta API Credentials -->
+                        <div class="card-settings-group">
+                            <div class="card-settings-title" id="txt-settings-api-title">Meta Graph API Settings</div>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5;" id="txt-settings-api-desc">
+                                Configure your official Meta Platform parameters. When Demo Simulation Mode is toggled off, MetaHub utilizes these details to query actual subscriber profiles and dispatch direct broadcasts.
+                            </p>
+
+                            <div id="txt-settings-privacy-notice" style="background: hsla(142, 70%, 45%, 0.08); border: 1px dashed var(--accent-success); padding: 12px 16px; border-radius: 10px; font-size: 12px; line-height: 1.5; color: var(--text-secondary); margin-bottom: 20px; display: flex; align-items: flex-start; gap: 10px;">
+                                <i class="fa-solid fa-shield-halved" style="color: var(--accent-success); font-size: 16px; margin-top: 2px; flex-shrink: 0;"></i>
+                                <span id="txt-settings-privacy-span">🔒 <strong>Client-Side Isolation:</strong> All tokens, credentials, and auto-reply rules are stored strictly inside your browser's local sandbox (localStorage). Your keys are 100% private and never transmitted to our servers or mixed with other users.</span>
+                            </div>
+
+                            <div style="margin-bottom: 24px;">
+                                <button class="btn-primary" id="btn-fb-login" onclick="triggerFacebookLogin()" style="background: hsl(214, 89%, 52%); box-shadow: 0 4px 12px hsla(214, 89%, 52%, 0.2); width: 100%; border-radius: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; height: 46px; cursor: pointer; transition: all var(--transition-fast);">
+                                    <i class="fa-brands fa-facebook-f" style="font-size: 16px;"></i>
+                                    <span id="txt-btn-fb-login" style="font-weight: 600;">Connect Facebook Account</span>
+                                </button>
+                            </div>
+
+                            <div class="settings-row">
+                                <div class="form-group">
+                                    <label class="form-label" id="txt-settings-token-label">Page Access Token</label>
+                                    <input type="password" class="form-input" id="settings-access-token" placeholder="EAAbwba5ZCnQcBA...">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" id="txt-settings-id-label">Facebook Page ID</label>
+                                    <input type="text" class="form-input" id="settings-page-id" placeholder="1029485720...">
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+                                <button class="btn-primary" onclick="saveApiCredentials()">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    <span id="txt-btn-save-settings">Save Meta Settings</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step-by-Step Meta Developer Guide -->
+                        <div class="card-settings-group" style="background: hsla(214, 100%, 54%, 0.03);">
+                            <div class="card-settings-title" style="color: var(--accent-primary); border-color: hsla(214, 100%, 54%, 0.15);" id="txt-settings-guide-title">Meta API Configuration Guide</div>
+                            <div style="font-size: 13px; line-height: 1.7; color: var(--text-secondary); display: flex; flex-direction: column; gap: 14px;">
+                                <p id="txt-guide-p1">To capture Messenger Page-Scoped User IDs (PSIDs) and broadcast compliant messages, proceed as follows:</p>
+                                <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 10px;">
+                                    <li id="txt-guide-li1">Visit the <a href="https://developers.facebook.com/" target="_blank" style="color: var(--accent-primary); text-decoration: underline;">Meta Developers Portal</a> and select <strong>Create App</strong>.</li>
+                                    <li id="txt-guide-li2">Assign the **Messenger** product to your newly created application.</li>
+                                    <li id="txt-guide-li3">Link your designated Facebook Business Page inside the Messenger settings workspace.</li>
+                                    <li id="txt-guide-li4">Under token generation parameters, extract the unique <strong>Page Access Token</strong>.</li>
+                                    <li id="txt-guide-li5">Ensure the **Webhooks** feature is subscribed to the `messages` and `messaging_postbacks` parameters on your backend server.</li>
+                                    <li id="txt-guide-li6">Copy your credentials into the setting fields above, turn off Demo Mode, and you're ready to communicate officially.</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ==========================================
+         MODAL: SIMULATED FACEBOOK OAUTH DIALOGUE
+         ========================================== -->
+    <div id="fb-login-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); z-index: 999; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;">
+        <div class="panel-card" style="width: 90%; max-width: 480px; padding: 32px; border: 1px solid var(--border-color); border-radius: 16px; background: var(--bg-surface-opaque); box-shadow: var(--shadow-lg); position: relative; animation: modalSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <i class="fa-brands fa-facebook" style="font-size: 28px; color: #1877f2;"></i>
+                    <span id="txt-oauth-header" style="font-weight: 700; font-size: 16px; color: var(--text-primary);">Meta Authorization Dialogue</span>
+                </div>
+                <button class="btn-control" style="width: 32px; height: 32px; border-radius: 8px; font-size: 12px; padding: 0;" onclick="closeFacebookLoginModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div style="font-size: 13px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 24px; display: flex; flex-direction: column; gap: 12px;">
+                <p id="txt-oauth-desc1"><strong>MetaHub</strong> is requesting access to connect your Facebook account and manage your business Pages:</p>
+                <div style="background: var(--bg-card); padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 10px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; align-items: center; gap: 8px; color: var(--text-primary); font-weight: 500;">
+                        <i class="fa-solid fa-circle-check" style="color: var(--accent-success); font-size: 14px;"></i>
+                        <span id="txt-oauth-perm1">Manage Page conversations in Messenger</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; color: var(--text-primary); font-weight: 500;">
+                        <i class="fa-solid fa-circle-check" style="color: var(--accent-success); font-size: 14px;"></i>
+                        <span id="txt-oauth-perm2">Access Page list and details</span>
+                    </div>
+                </div>
+                <p id="txt-oauth-desc2">By logging in, your associated Page Subscribers list will automatically sync with this dashboard.</p>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn-primary" onclick="confirmFacebookLoginMock()" style="background: #1877f2; box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3); width: 100%; border: none;">
+                    <i class="fa-brands fa-facebook-f" style="margin-right: 8px;"></i>
+                    <span id="txt-oauth-btn-confirm">Continue as Meta Admin</span>
+                </button>
+                <button class="btn-control" onclick="closeFacebookLoginModal()" style="width: 100%; height: 46px; border-radius: 10px; font-weight: 600;" id="txt-oauth-btn-cancel">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    @keyframes modalSlideIn {
+        from { opacity: 0; transform: scale(0.9) translateY(20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    body.lang-ur #fb-login-modal {
+        direction: rtl;
+        text-align: right;
+    }
+    body.lang-ur #fb-login-modal .btn-primary i {
+        margin-left: 8px;
+        margin-right: 0;
+    }
+    </style>
+
+    <!-- Application script -->
+    <script src="app.js"></script>
+</body>
+</html>
